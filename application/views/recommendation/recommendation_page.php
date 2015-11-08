@@ -35,7 +35,6 @@
                         icon: "<?=base_url('static/lib/ios-overlay/img/check.png')?>"
                     });
                     $btn.parent().find('.dislike').hide();
-                    $btn.parent().find('.bookmark').hide();
                     if($btn.parent().find('.like').length > 0){
 
 
@@ -55,6 +54,48 @@
                 });
             });
         });
+
+        $('body').on('click','.bookmark',function () {
+            var $btn = $(this);
+            var id = $(this).attr('data-id');
+            var req2 = $.ajax({
+                url: '<?=site_url('user/bookmark')?>/'+id+'/',
+                type: 'POST',
+                dataType: 'json'
+            });
+
+            req2.done(function (json) {
+                if(json.error){
+                    iosOverlay({
+                        text: "Error",
+                        duration: 2e3,
+                        icon: "<?=base_url('static/lib/ios-overlay/img/check.png')?>"
+                    });
+                } else if(json.result && json.result == 'OK'){
+                    iosOverlay({
+                        text: "Done",
+                        duration: 2e3,
+                        icon: "<?=base_url('static/lib/ios-overlay/img/check.png')?>"
+                    });
+                    //$btn.parent().find('.bookmark').hide();
+                    if($btn.text() == "Bookmark"){
+                        $btn.text('Remove bookmark')
+                    } else{
+                        $btn.text('Bookmark');
+                    }
+
+                }
+            });
+            req2.fail(function () {
+                iosOverlay({
+                    text: "Error",
+                    duration: 2e3,
+                    icon: "<?=base_url('static/lib/ios-overlay/img/check.png')?>"
+                });
+            });
+        });
+
+
     } );
 
 

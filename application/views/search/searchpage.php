@@ -40,9 +40,11 @@
             foreach($movies as $m){
                 if($m["Type"]=="movie")
                 ?>
-                <div onclick="window.location.href='<?=site_url('recommendation/'.$m['imdbID'])?>'" class="col-md-2 search-box">
+                <div class="col-md-2 search-box"><a href="<?=site_url('recommendation/'.$m['imdbID'])?>">
                     <img src="<?=$m['Poster']?>" style="width:200px;"/><br/>
-                    <?=$m["Title"]?>
+                    <span class="movie-title"><?=$m["Title"]?></span></a><br/>
+                    <img src="<?=base_url('static/images/imdb_icon.png')?>" style="width:23px;height:11px;" alt="IMDB Rating"/>
+                    &nbsp;<?=$m['imdbRating']?>
                 </div>
                 <?php
             }

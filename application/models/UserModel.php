@@ -89,8 +89,47 @@ class UserModel extends CI_Model
         return false;
     }
 
+    public function bookmark($id){
+        $sql = 'SELECT * FROM '.$this->db->dbprefix('bookmarks').' WHERE imdb_id=? AND user = ?';
+        $q = $this->db->query($sql,array($id,$this->UserModel->getId()));
+        if($q){
+            if($q->num_rows() < 1){
+                $sql = 'INSERT INTO '.$this->db->dbprefix('bookmarks').' (user,imdb_id) VALUES (?,?)';
+                $q = $this->db->query($sql,array($this->UserModel->getId(),$id));
+                if($q) return true;
+            } else{
+                $sql = 'DELETE FROM '.$this->db->dbprefix('bookmarks').' WHERE user = ? AND imdb_id = ?';
+                $q = $this->db->query($sql,array($this->UserModel->getId(),$id));
+                if($q) return true;
+            }
+        }
+        return false;
+    }
+
+    public function bookmarked($id){
+        $sql = 'SELECT * FROM '.$this->db->dbprefix('bookmarks').' WHERE imdb_id=? AND user = ?';
+        $q = $this->db->query($sql,array($id,$this->getId()));
+        if($q && $q->num_rows() > 0){
+            return true;
+        }
+        return false;
+    }
+
     public function getPreferences(){
         $sql = 'SELECT imdb_id FROM '.$this->db->dbprefix('preferences').' WHERE user = ?';
+        $q = $this->db->query($sql,$this->getId());
+        if($q && $q->num_rows() > 0){
+            $arr = array();
+            foreach($q->result_array() as $row){
+                $arr[] = $row;
+            }
+            return $arr;
+        }
+        return false;
+    }
+
+    public function getBookmarks(){
+        $sql = 'SELECT imdb_id FROM '.$this->db->dbprefix('bookmarks').' WHERE user = ?';
         $q = $this->db->query($sql,$this->getId());
         if($q && $q->num_rows() > 0){
             $arr = array();

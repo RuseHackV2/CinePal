@@ -46,7 +46,7 @@ class SearchController extends CI_Controller
 
 
 
-        $page = $this->load->view('search/searchpage.php',$data,true);
+        $page = $this->load->view('search/searchpage',$data,true);
         $this->load->view('skeleton',array('page'=>$page,'title'=>'Search - '.$criteria));
 
 

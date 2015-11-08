@@ -34,7 +34,11 @@ class RecommendationController extends CI_Controller
         $cache = $this->RecommendationCache->readCache($imdb_id);
         if(is_array($cache)){
             $data['movie'] = $cache['movie'];
-            $data['recommendations'] = $cache['recommendations'];
+            //$data['recommendations'] = $cache['recommendations'];
+            foreach($cache['recommendations'] as $v){
+                if(isset($v['info']['imdbID']) && !$this->UserModel->disliked($v['info']['imdbID']))
+                $data['recommendations'][] = $v;
+            }
         } else{
             if($this->OMDBModel->getFromApi($imdb_id,2)){
                 $data['movie'] = $this->OMDBModel->asArray();
@@ -48,6 +52,7 @@ class RecommendationController extends CI_Controller
                         if ($this->OMDBModel->getFromApi($v)) {
                             $info = $this->OMDBModel->asArray();
                         }
+                        //if(!$this->UserModel->disliked($info['imdbID'])){
                         $rec[] = array('name' => $v, 'info' => $info);
                     }
 

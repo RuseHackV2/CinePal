@@ -44,12 +44,14 @@
                             <input type="password" placeholder="Password" class="form-control" name="password">
                         </div>
                         <input type="submit" value="Sign in" class="btn btn-success" name="submit"/>
+                        <a href="<?=site_url('/user/register')?>" class="btn btn-primary">Sign up</a>
                     </form>
                 <?php } else { ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hi, <?=$user->getName()?> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?=site_url('user/preferences')?>">Preferences</a></li>
+                        <li><a href="<?=site_url('user/bookmarks')?>">Bookmarks</a></li>
                         <li><a href="#">My account</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="<?=site_url('/home/logout')?>">Log out</a></li>

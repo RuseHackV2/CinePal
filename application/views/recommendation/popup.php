@@ -23,7 +23,7 @@
             if(isset($user) && !$user->disliked($movie['imdbID'])){
                 ?>
 
-                <a href="javascript:void(0)" class="btn btn-success btn-xs">Bookmark</a>
+                <a href="javascript:void(0)" class="btn btn-success btn-xs bookmark" data-id="<?=$movie['imdbID']?>"><?=$user->bookmarked($movie['imdbID'])?'Remove bookmark':'Bookmark'?></a>
                 <a href="javascript:void(0)" class="btn primary-alt btn-xs dislike" data-id="<?=$movie['imdbID']?>">I've watched this</a>
                 <a href="javascript:void(0)" data-id="<?=$movie['imdbID']?>" class="btn btn-danger btn-xs dislike">I don't like this</a>
 
